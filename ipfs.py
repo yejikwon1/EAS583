@@ -6,7 +6,7 @@ PINATA_SECRET_API_KEY="6fce643db98dd2c09352b9eef212e48ebee7575cc69823be978e24a57
 PINATA_PIN_JSON_URL="https://api.pinata.cloud/pinning/pinJSONToIPFS"
 
 
-IPFS_GATEWAY= "https://gateway.pinata.cloud/ipfs"
+IPFS_GATEWAY= "https://gateway.pinata.cloud/ipfs/"
 
 def pin_to_ipfs(data):
 
@@ -36,7 +36,7 @@ def pin_to_ipfs(data):
 
 
 def get_from_ipfs(cid,content_type="json"):
-	assert isinstance(cid,str), f"get_from_ipfs accepts a cid in the form of a string"
+	assert isinstance(cid,str), "get_from_ipfs accepts a cid in the form of a string"
 	#YOUR CODE HERE	
 
 	url=f"{IPFS_GATEWAY}{cid}"
