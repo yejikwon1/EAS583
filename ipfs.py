@@ -42,15 +42,9 @@ def get_from_ipfs(cid,content_type="json"):
 	url=f"{IPFS_GATEWAY}{cid}"
 	response=requests.get(url)
 
-	if response.status_code==200:
+	if response.ok:
 		try:
-			if content_type=="json":
-				data=response.json()
-				assert isinstance(data,dict), "get_from_ipfs should return a dict"
-			else:
-				data=response.text
+			return response.json()
 		except requests.exceptions.JSONDecodeError:
-			raise ValueError
-		return data
-	else:
-		raise Exception(f"failed")
+			return response.text
+	raise Exception(f"failed")
