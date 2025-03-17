@@ -23,12 +23,10 @@ def pin_to_ipfs(data):
 
 	response=requests.post(PINATA_PIN_JSON_URL,headers=headers,json=json_data)
 
-	if response.status_code==200:
+	if response.ok:
 		cid=response.json()["IpfsHash"]
 		return cid
-
-	else:
-		return None
+	return None
 
 	#assert isinstance(data,dict), f"Error pin_to_ipfs expects a dictionary"
 	#YOUR CODE HERE
@@ -47,4 +45,4 @@ def get_from_ipfs(cid,content_type="json"):
 			return response.json()
 		except requests.exceptions.JSONDecodeError:
 			return response.text
-	raise Exception(f"failed")
+		raise Exception(f"failed")
