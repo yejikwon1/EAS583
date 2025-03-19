@@ -60,7 +60,6 @@ def is_ordered_block(w3, block_num):
 
 	base_fee=block.get('baseFeePerGas',0)
 	fees=[]
-	
 
 	for tx in block.transactions:
 		if tx['type']==2:
@@ -69,6 +68,7 @@ def is_ordered_block(w3, block_num):
 			priority_fee=tx['gasPrice']-base_fee
 
 		fees.append(priority_fee)
+
 	ordered=fees==sorted(fees,reverse=True)
 
 	return ordered
