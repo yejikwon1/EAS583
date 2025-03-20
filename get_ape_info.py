@@ -31,12 +31,12 @@ def get_ape_info(ape_id):
 
     # YOUR CODE HERE
 
-    data["owner"]=contract.functions.ownerOf(ape_id).call()
+    data["owner"]=Web3.to_checksum_address(contract.functions.ownerOf(ape_id).call())
 
-    token_uri=contract.functions.tokenURI(ape_id).call().replace("ipfs://","https://ipfs.io/ipfs/")
-    metadata=requests.get(token_uri).json()
+    token_uri=contract.functions.tokenURI(ape_id).call()
+    metadata=requests.get(token_uri.replace("ipfs://","https://ipfs.io/ipfs/")).json()
 
-    data["image"]=metadata.get("image","").replace("ipfs://","https://ipfs.io/ipfs/")
+    data["image"]=metadata.get("image","")
     data["eyes"]=next((attr["value"] for attr in metadata.get("attributes",[]) if attr["trait_type"]=="Eyes"),"")
 
     #required
