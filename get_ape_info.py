@@ -29,6 +29,10 @@ def get_ape_info(ape_id):
 
     data = {'owner': "", 'image': "", 'eyes': ""}
 
+
+
+
+
     # YOUR CODE HERE
 
     data["owner"]=Web3.to_checksum_address(contract.functions.ownerOf(ape_id).call())
@@ -36,8 +40,12 @@ def get_ape_info(ape_id):
     token_uri=contract.functions.tokenURI(ape_id).call()
     metadata=requests.get(token_uri.replace("ipfs://","https://ipfs.io/ipfs/")).json()
 
-    data["image"]=metadata.get("image","")
-    data["eyes"]=next((attr["value"] for attr in metadata.get("attributes",[]) if attr["trait_type"]=="Eyes"),"")
+    data["image"]=metadata.get("image")
+    data["eyes"]=next((attr["value"] for attr in metadata.get("attributes",[]) if attr["trait_type"]=="Eyes"))
+
+
+
+
 
     #required
 
