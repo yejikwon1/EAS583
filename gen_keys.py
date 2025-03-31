@@ -3,7 +3,7 @@ from eth_account.messages import encode_defunct
 import eth_account
 import os
 
-def get_keys (challenge, filename="secret_key.txt"):
+def sign_message(challenge, filename="secret_key.txt"):
     """
     challenge - byte string
     filename - filename of the file that contains your account secret key
@@ -16,27 +16,34 @@ def get_keys (challenge, filename="secret_key.txt"):
         key = f.readlines()
     assert(len(key) > 0), "Your account secret_key.txt is empty"
 
-    private_key=key[0].strip()
-    acct=eth_account.Account.from_key(private_key)
-    eth_addr=acct.address
-    message = encode_defunct(text=challenge.hex())
+    w3 = Web3()
+    message = encode_defunct(challenge)
 
-    #w3 = Web3()
-    
     # TODO recover your account information for your private key and sign the given challenge
     # Use the code from the signatures assignment to sign the given challenge
     
+    private_key=key[0].strip()
+    acct=eth_account.Account.from_key(private_key)
+    eth_addr=acct.address
+
     signed_message=acct.sign_message(message)
-    recovered=eth_account.Account.recover_message(message,signed_message.signature)
+
+    recovered=eth_account.Account.recover_message(message,signature=signed_message.signature)
 
     assert eth_account.Account.recover_message(message,signature=signed_message.signature.hex()) == eth_addr, f"Failed to sign message properly"
 
     #return signed_message, account associated with the private key
-  #  return signed_message, eth_addr
-    return {"address": eth_addr, "signature":signed_message.signature.hex()}
+    return signed_message, eth_addr
+
+
+def get_keys(challenge,filename="secret_key.txt"):
+    return sign_message(challenge,filename)
+
 
 if __name__ == "__main__":
     for i in range(4):
         challenge = os.urandom(64)
         result=get_keys(challenge)
-        print(result )
+        print(result)
+       # sig, addr= sign_message(challenge=challenge)
+        #print( addr )
