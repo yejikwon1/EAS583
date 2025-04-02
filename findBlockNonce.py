@@ -64,6 +64,6 @@ if __name__ == '__main__':
     diff = 20
 
     transactions = get_random_lines(filename, num_lines)
-    #prev_hash=hashlib.sha256(b'genesis').digest()
+    prev_hash=hashlib.sha256(b'genesis').digest()
     nonce = mine_block(diff, transactions)
     print(nonce)
