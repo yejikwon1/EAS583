@@ -58,7 +58,7 @@ contract Destination is AccessControl {
 
     underlying_tokens[tokenAddress]=_underlying_token;
 
-    tokens.push(tokenAddress);
+  
 
     emit Creation(_underlying_token,tokenAddress);
     return tokenAddress;
