@@ -40,7 +40,7 @@ contract Destination is AccessControl {
 
     token.burnFrom(msg.sender,_amount);
 
-    address underlying=wrapped_tokens[_wrapped_token];
+    address underlying=underlying_tokens[_wrapped_token];
     emit Unwrap(underlying,_wrapped_token,msg.sender,_recipient,_amount);
 
 
