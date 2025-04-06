@@ -46,9 +46,10 @@ def merkle_assignment():
             try:
                 proof=prove_merkle(tree,i)
                 tx_hash=send_signed_msg(proof,leaves[i])
+                print(f"claimed prime{primes[i]} with tx hash: {tx_hash}")
                 break
             except Exception as e:
-                print(f"filed")
+                print(f"failed to claim prime{primes[i]}:{e}")
 
 
 
