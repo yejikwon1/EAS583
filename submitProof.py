@@ -44,14 +44,11 @@ def merkle_assignment():
         # tx_hash = send_signed_msg(proof, leaves[random_leaf_index])
     
         try:
-            proof=prove_merkle(tree,i)
             tx_hash = send_signed_msg(proof, leaves[random_leaf_index])
             print(f"claimed")
             
         except Exception as e:
             print(f"failed")
-
-
 
 
 def generate_primes(num_primes):
