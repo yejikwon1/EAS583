@@ -165,7 +165,7 @@ def send_signed_msg(proof, random_leaf):
     leaf_hash=Web3.solidity_keccak(['uint256'],[int.from_bytes(random,'big')])
     tx=contract.functions.submit(proof,leaf_hash).build_transaction({
         'chainId':97,
-        'gas':300000,
+        'gas':100000,
         'gasPrice':w3.eth.gas_price,
         'nonce':w3.eth.get_transaction_count(acct.address),
     })
