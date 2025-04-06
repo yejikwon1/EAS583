@@ -98,9 +98,9 @@ def build_merkle(leaves):
         current=tree[-1]
         next_level=[]
 
-        for i in range(0,len(level),2):
+        for i in range(0,len(current),2):
             left=current[i]
-            right=current[i+1] if i+1 <len(level) else current[i]
+            right=current[i+1] if i+1 <len(current) else current[i]
             next_level.append(hash_pair(left,right))
         tree.append(next_level)
 
