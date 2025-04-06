@@ -56,11 +56,24 @@ def generate_primes(num_primes):
         Function to generate the first 'num_primes' prime numbers
         returns list (with length n) of primes (as ints) in ascending order
     """
-    #primes_list = []
+    primes_list = []
 
     #TODO YOUR CODE HERE
 
-    primes_list=list(primerange(0,84020))[:num_primes]
+    candidate=2
+
+    while len(primes_list)<num_primes:
+        is_prime=True
+        for p in primes_list:
+            if p*p>candidate:
+                break
+            if candidate%p==0:
+                is_prime=False
+                break
+        if is_prime:
+            primes_list.append(candidate)
+        candidate +=1
+    #primes_list=list(primerange(0,84020))[:num_primes]
     return primes_list
 
 
