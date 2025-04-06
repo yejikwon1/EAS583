@@ -138,14 +138,13 @@ def sign_challenge(challenge):
     """
     acct = get_account()
 
-    addr = acct.address
-    eth_sk = acct.key
+    #addr = acct.address
+    #eth_sk = acct.key
 
     # TODO YOUR CODE HERE
     message=encode_defunct(text=challenge)
-    eth_sig_obj = eth_account.Account.sign_message(message,private_key=eth_sk)
-
-    return addr, eth_sig_obj.signature.hex()
+    sig=eth_account.Account.sign_message(message,private_key=acct.key).signature.hex()
+    return acct.address,sig
 
 
 def send_signed_msg(proof, random_leaf):
