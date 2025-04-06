@@ -60,23 +60,19 @@ def generate_primes(num_primes):
 
     #TODO YOUR CODE HERE
 
-    candidate=2
+    n=2
 
     while len(primes_list)<num_primes:
         is_prime=True
         for p in primes_list:
-            if p*p>candidate:
+            if p*p>n:
                 break
-            if candidate%p==0:
+            if n%p==0:
                 is_prime=False
                 break
         if is_prime:
-            primes_list.append(candidate)
-        candidate +=1
-    #primes_list=list(primerange(0,84020))[:num_primes]
-    return primes_list
-
-
+            primes_list.append(n)
+        n +=1
     return primes_list
 
 
