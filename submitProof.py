@@ -122,8 +122,9 @@ def prove_merkle(merkle_tree, random_indx):
     # TODO YOUR CODE HERE
 
     for level in merkle_tree[:-1]:
-        if (index^1)<len(level):
-            proof.append(level[index^1])
+        pair_index=index^1
+        if pair_index<len(level):
+            proof.append(level[pair_index])
         index //=2
     return proof
 
