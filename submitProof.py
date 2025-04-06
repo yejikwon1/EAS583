@@ -120,11 +120,10 @@ def prove_merkle(merkle_tree, random_indx):
     """
     proof = []
     # TODO YOUR CODE HERE
-    index=random_indx
+
     for level in merkle_tree[:-1]:
-        pair_index=index^1
-        if pair_index<len(level):
-            proof.append(level[pair_index])
+        if (index^1)<len(level):
+            proof.append(level[index^1])
         index //=2
     return proof
 
