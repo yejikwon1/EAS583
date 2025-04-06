@@ -77,8 +77,8 @@ def convert_leaves(primes_list):
     leaves=[]
     for prime in primes_list:
         pb=prime.to_bytes((prime.bit_length()+7)//8,'big')
-        padded=pb.rjust(32,b'\x00')
-        leaves.append(padded)
+        leaf=pb.rjust(32,b'\x00')
+        leaves.append(leaf)
 
     return leaves
 
@@ -93,16 +93,16 @@ def build_merkle(leaves):
 
     #TODO YOUR CODE HERE
     tree = [leaves]
-    level=leaves
-    while len(level)>1:
+ 
+    while len(tree[-1])>1:
+        current=tree[-1]
         next_level=[]
+
         for i in range(0,len(level),2):
-            left=level[i]
-            right=level[i+1] if i+1 <len(level) else level[i]
-            parent=hash_pair(left,right)
-            next_level.append(parent)
+            left=current[i]
+            right=current[i+1] if i+1 <len(level) else current[i]
+            next_level.append(hash_pair(left,right))
         tree.append(next_level)
-        level=next_level
 
     return tree
 
