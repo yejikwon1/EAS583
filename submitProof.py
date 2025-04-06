@@ -42,14 +42,14 @@ def merkle_assignment():
         # TODO, when you are ready to attempt to claim a prime (and pay gas fees),
         #  complete this method and run your code with the following line un-commented
         # tx_hash = send_signed_msg(proof, leaves[random_leaf_index])
-        for i in range(len(primes)):
-            try:
-                proof=prove_merkle(tree,i)
-                tx_hash=send_signed_msg(proof,leaves[i])
-                print(f"claimed prime{primes[i]} with tx hash: {tx_hash}")
-                break
-            except Exception as e:
-                print(f"failed to claim prime{primes[i]}:{e}")
+    
+        try:
+            proof=prove_merkle(tree,i)
+            tx_hash = send_signed_msg(proof, leaves[random_leaf_index])
+            print(f"claimed")
+            
+        except Exception as e:
+            print(f"failed")
 
 
 
@@ -165,7 +165,7 @@ def send_signed_msg(proof, random_leaf):
     nonce=w3.eth.get_transaction_count(acct.address)
     gas_price=w3.eth.gas_price
 
-    leaf_hash=Web3.solidity_keccak(['unit256'],[int.from_bytes(random,'big')])
+    leaf_hash=Web3.solidity_keccak(['uint256'],[int.from_bytes(random,'big')])
     tx=contract.functions.submit(proof,leaf_hash).build_transaction({
         'chainId':97,
         'gas':300000,
@@ -177,6 +177,15 @@ def send_signed_msg(proof, random_leaf):
     tx_hash=w3.eth.send_raw_transaction(signed_tx.raw_transaction)
 
     return tx_hash.hex()
+
+############################################
+############################################
+############################################
+############################################
+############################################
+
+
+
 
 
 # Helper functions that do not need to be modified
