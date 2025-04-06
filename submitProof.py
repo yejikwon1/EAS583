@@ -63,16 +63,16 @@ def generate_primes(num_primes):
     n=2
 
     while len(primes_list)<num_primes:
-        is_prime=True
+        prime=True
         for p in primes_list:
             if p*p>n:
                 break
             if n%p==0:
-                is_prime=False
+                prime=False
                 break
-        if is_prime:
+        if prime:
             primes_list.append(n)
-        n +=1
+        n =n+1
     return primes_list
 
 
