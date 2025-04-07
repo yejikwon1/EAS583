@@ -52,7 +52,8 @@ contract Destination is AccessControl {
     address tokenAddress=address(bridgeToken);
 
     underlying_tokens[_underlying_token]=tokenAddress;
-    wrapped_tokens[tokenAddress]=_underlying_token;
+    wrapped_tokens[_underlying_token]=tokenAddress;
+    underlying_tokens[tokenAddress]=_underlying_token;
 
     emit Creation(_underlying_token,tokenAddress);
     return tokenAddress;
