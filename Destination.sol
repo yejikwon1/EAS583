@@ -24,13 +24,13 @@ contract Destination is AccessControl {
 
 	function wrap(address _underlying_token, address _recipient, uint256 _amount ) public onlyRole(WARDEN_ROLE) {
 		//YOUR CODE HERE
-    address bridgeTokenAddr=underlying_tokens[_underlying_token];
-    require(bridgeTokenAddr!=address(0),"Token not registered");
+    address bridgeTokenAddress=underlying_tokens[_underlying_token];
+    require(bridgeTokenAddress!=address(0),"Token not registered");
 
-    BridgeToken token=BridgeToken(bridgeTokenAddr);
+    BridgeToken token=BridgeToken(bridgeTokenAddress);
     token.mint(_recipient,_amount);
 
-    emit Wrap(_underlying_token,bridgeTokenAddr,_recipient,_amount);
+    emit Wrap(_underlying_token,bridgeTokenAddress,_recipient,_amount);
 	}
 
 	function unwrap(address _wrapped_token, address _recipient, uint256 _amount ) public {
