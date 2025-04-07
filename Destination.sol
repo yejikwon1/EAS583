@@ -36,7 +36,6 @@ contract Destination is AccessControl {
 	function unwrap(address _wrapped_token, address _recipient, uint256 _amount ) public {
 		//YOUR CODE HERE
     BridgeToken token=BridgeToken(_wrapped_token);
-
     token.burnFrom(msg.sender,_amount);
 
     address underlying=underlying_tokens[_wrapped_token];
@@ -53,8 +52,7 @@ contract Destination is AccessControl {
     address tokenAddress=address(bridgeToken);
 
     underlying_tokens[_underlying_token]=tokenAddress;
-    wrapped_tokens[_underlying_token]=tokenAddress;
-    underlying_tokens[tokenAddress]=_underlying_token;
+    wrapped_tokens[tokenAddress]=_underlying_token;
 
     emit Creation(_underlying_token,tokenAddress);
     return tokenAddress;
