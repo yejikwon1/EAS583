@@ -52,8 +52,8 @@ contract AMM is AccessControl{
 		require( sellToken == tokenA || sellToken == tokenB, 'Invalid token' );
 		require( sellAmount > 0, 'Cannot trade 0' );
 		require( invariant > 0, 'No liquidity' );
-		uint256 qtyA;
-		uint256 qtyB;
+		uint256 qtyA=ERC20(tokenA).balanceOf(address(this));
+		uint256 qtyB=ERC20(tokenB).balanceOf(address(this));
 		uint256 swapAmt;
 
 		//YOUR CDE HERE 
@@ -61,18 +61,18 @@ contract AMM is AccessControl{
 		address buyToken= isSellingA?tokenB : tokenA;
 
 		require(ERC20(sellToken).transferFrom(msg.sender,address(this),sellAmount),"failed");
-		unit256 feeAdjustedAmount=(sellAmount*(10000-feebps))/10000;
+		uint256 feeAdjustedAmount=(sellAmount*(10000-feebps))/10000;
 
 		if(isSellingA){
-			unit256 newQuantityA=qtyA+feeAdjustedAmount;
-			unit256 newQuantityB=invariant/newQuantityA;
+			uint256 newQuantityA=qtyA+feeAdjustedAmount;
+			uint256 newQuantityB=invariant/newQuantityA;
 			swapAmt=qtyB-newQuantityB;
-			require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed")
+			require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
 		}else{
-			unit256 newQuantityB=qtyB+feeAdjustedAmount;
-			unit256 newQuantityA=invariant/newQuantityB;
+			uint256 newQuantityB=qtyB+feeAdjustedAmount;
+			uint256 newQuantityA=invariant/newQuantityB;
 			swapAmt=qtyA-newQuantityA;
-			require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed")
+			require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
 		}
 		
 		uint256 new_invariant = ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
