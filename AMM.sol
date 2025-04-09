@@ -51,7 +51,7 @@ contract AMM is AccessControl{
 		require( invariant > 0, 'Invariant must be nonzero' );
 		require( sellToken == tokenA || sellToken == tokenB, 'Invalid token' );
 		require( sellAmount > 0, 'Cannot trade 0' );
-		require( invariant > 0, 'No liquidity' );
+		//require( invariant > 0, 'No liquidity' );
 
 
 		//YOUR CDE HERE 
@@ -68,12 +68,12 @@ contract AMM is AccessControl{
 		uint256 swapAmt;
 
 		if(isSellingA){
-			uint256 newQuantityA=qtyA+feeAdjustedAmount;
+			uint256 newQuantityA=qtyA;
 			uint256 newQuantityB=invariant/newQuantityA;
 			swapAmt=qtyB-newQuantityB;
 			require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
 		}else{
-			uint256 newQuantityB=qtyB+feeAdjustedAmount;
+			uint256 newQuantityB=qtyB;
 			uint256 newQuantityA=invariant/newQuantityB;
 			swapAmt=qtyA-newQuantityA;
 			require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
