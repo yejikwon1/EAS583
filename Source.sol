@@ -27,7 +27,7 @@ contract Source is AccessControl {
 		require(_amount>0,"amount>0");
 
 		bool success=ERC20(_token).transferFrom(msg.sender,address(this),_amount);
-		require(success,"transfer failed");
+		require(success,"failed");
 		emit Deposit(_token,_recipient,_amount);
 
 	}
@@ -37,6 +37,7 @@ contract Source is AccessControl {
 		require(_amount>0,"amount>0");
 
 		bool success=ERC20(_token).transferFrom(_recipient,_amount);
+		require(success,"failed");
 		emit Withdrawal(_token,_recipient,_amount);
 	
 	}
