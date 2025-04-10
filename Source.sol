@@ -46,7 +46,6 @@ contract Source is AccessControl {
 		//YOUR CODE HERE
 		require(!approved[_token],"token registered");
 		approved[_token]=true;
-		tokens.push(_token);
 		emit Registration(_token);
 
 
