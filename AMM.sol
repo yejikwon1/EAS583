@@ -101,8 +101,8 @@ contract AMM is AccessControl{
 		bool successB=ERC20(tokenB).transferFrom(msg.sender,address(this),amtB);
 		require(successA&&successB,'failed');
 
-		uint256 balA=ERC20(tokenA).balanceOf(address(this));
-		uint256 balB=ERC20(tokenB).balanceOf(address(this));
+		//uint256 balA=ERC20(tokenA).balanceOf(address(this));
+		//uint256 balB=ERC20(tokenB).balanceOf(address(this));
 
 
 		invariant=balA*balB;
