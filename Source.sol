@@ -23,6 +23,7 @@ contract Source is AccessControl {
 
 	function deposit(address _token, address _recipient, uint256 _amount ) public {
 		//YOUR CODE HERE
+		//code
 		require(approved[_token],"token not approved");
 		require(_amount>0,"amount>0");
 
@@ -36,7 +37,7 @@ contract Source is AccessControl {
 		//YOUR CODE HERE
 		require(_amount>0,"amount>0");
 
-		bool success=ERC20(_token).transferFrom(_recipient,_amount);
+		bool success=ERC20(_token).transfer(_recipient,_amount);
 		require(success,"failed");
 		emit Withdrawal(_token,_recipient,_amount);
 	
@@ -46,8 +47,8 @@ contract Source is AccessControl {
 		//YOUR CODE HERE
 		require(!approved[_token],"token registered");
 		approved[_token]=true;
+		tokens.push(_token);
 		emit Registration(_token);
-
 
 	}
 
