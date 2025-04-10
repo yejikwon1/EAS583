@@ -35,7 +35,6 @@ contract Source is AccessControl {
 
 	function registerToken(address _token) onlyRole(ADMIN_ROLE) public {
 		//YOUR CODE HERE
-		//require(!approved[_token],"token registered");
 		emit Registration(_token);
 
 
