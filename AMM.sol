@@ -93,7 +93,6 @@ contract AMM is AccessControl{
 		require(ERC20(tokenA).transferFrom(msg.sender,address(this),amtA),"A failed");
 		require(ERC20(tokenB).transferFrom(msg.sender,address(this),amtB),"B failed");
 
-		_grantRole(LP_ROLE,msg.sender);
 
 		invariant=ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
 
