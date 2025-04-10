@@ -71,14 +71,13 @@ contract AMM is AccessControl{
 			uint256 newQuantityA=qtyA+feeAdjustedAmount;
 			uint256 newQuantityB=invariant/newQuantityA;
 			swapAmt=qtyB-newQuantityB;
-			require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
 		}else{
 			uint256 newQuantityB=qtyB+feeAdjustedAmount;
 			uint256 newQuantityA=invariant/newQuantityB;
 			swapAmt=qtyA-newQuantityA;
-			require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
 		}
-		
+		require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
+
 		uint256 new_invariant = ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
 		require( new_invariant >= invariant, 'Bad trade' );
 		invariant = new_invariant;
@@ -91,8 +90,10 @@ contract AMM is AccessControl{
 		require( amtA > 0 || amtB > 0, 'Cannot provide 0 liquidity' );
 		//YOUR CODE HERE
 
-		//require(ERC20(tokenA).transferFrom(msg.sender,address(this),amtA),"A failed");
-		//require(ERC20(tokenB).transferFrom(msg.sender,address(this),amtB),"B failed");
+		require(ERC20(tokenA).transferFrom(msg.sender,address(this),amtA),"A failed");
+		require(ERC20(tokenB).transferFrom(msg.sender,address(this),amtB),"B failed");
+
+		_grantRole(LP_ROLE,msg.sender);
 
 		invariant=ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
 
