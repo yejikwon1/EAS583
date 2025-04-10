@@ -36,7 +36,7 @@ contract Source is AccessControl {
 		//YOUR CODE HERE
 		require(_amount>0,"amount>0");
 
-		bool success=ERC20(_token).transferFrom(_recipient,_amount);
+		bool success=ERC20(_token).transfer(_recipient,_amount);
 		require(success,"failed");
 		emit Withdrawal(_token,_recipient,_amount);
 	
@@ -46,7 +46,7 @@ contract Source is AccessControl {
 		//YOUR CODE HERE
 		require(!approved[_token],"token registered");
 		approved[_token]=true;
-		token.push(_token);
+		tokens.push(_token);
 		emit Registration(_token);
 
 
