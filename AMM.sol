@@ -102,7 +102,7 @@ contract AMM is AccessControl{
 
 			invariant=balA*balB;
 
-			_grantRole(LP_ROLE,msg.sender)
+			_grantRole(LP_ROLE,msg.sender);
 
 		}
 
