@@ -101,6 +101,9 @@ contract AMM is AccessControl{
 			uint256 balB=ERC20(tokenB).balanceOf(address(this));
 
 			invariant=balA*balB;
+
+			_grantRole(LP_ROLE,msg.sender)
+
 		}
 
 		emit LiquidityProvision( msg.sender, amtA, amtB );
