@@ -90,13 +90,13 @@ contract AMM is AccessControl{
 		Use the ERC20 transferFrom to "pull" amtA of tokenA and amtB of tokenB from the sender
 	*/
 	function provideLiquidity( uint256 amtA, uint256 amtB ) public {
-		require( amtA > 0 && amtB > 0, 'Cannot provide 0 liquidity' );
+		require( amtA > 0 || amtB > 0, 'Cannot provide 0 liquidity' );
 		//YOUR CODE HERE
 
 		require(ERC20(tokenA).transferFrom(msg.sender,address(this),amtA),"A failed");
 		require(ERC20(tokenB).transferFrom(msg.sender,address(this),amtB),"B failed");
 
-		if (invariant==0){
+		if (invariant==0 && amtA>0 && amtB>0){
 			invariant=amtA*amtB;
 		}
 
