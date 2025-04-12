@@ -25,7 +25,7 @@ contract Source is AccessControl {
 		//YOUR CODE HERE
 		//code
 		require(approved[_token],"token not approved");
-		require(_amount>0,"amount>0");
+		//require(_amount>0,"amount>0");
 
 		bool success=ERC20(_token).transferFrom(msg.sender,address(this),_amount);
 		require(success,"transfer failed");
@@ -35,7 +35,7 @@ contract Source is AccessControl {
 
 	function withdraw(address _token, address _recipient, uint256 _amount ) onlyRole(WARDEN_ROLE) public {
 		//YOUR CODE HERE
-		require(_amount>0,"amount>0");
+		//require(_amount>0,"amount>0");
 
 		bool success=ERC20(_token).transfer(_recipient,_amount);
 		require(success,"failed");
