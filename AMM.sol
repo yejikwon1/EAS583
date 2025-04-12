@@ -85,7 +85,7 @@ contract AMM is AccessControl{
 		require( new_invariant >= invariant, 'Bad trade' );
 		invariant = new_invariant;
 
-		emit Swap(sellToken,buyToken,sellAmount0);
+		emit Swap(sellToken,buyToken,sellAmount,0);
 	}
 
 	/*
