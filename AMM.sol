@@ -93,22 +93,11 @@ contract AMM is AccessControl{
 		require( amtA > 0 || amtB > 0, 'Cannot provide 0 liquidity' );
 		//YOUR CODE HERE
 
-		if(amtA>0){
 		require(ERC20(tokenA).transferFrom(msg.sender,address(this),amtA),"A failed");
-		}
-		if(amtB>0){
+	
 		require(ERC20(tokenB).transferFrom(msg.sender,address(this),amtB),"B failed");
-		}
-		if (invariant==0){
-			uint256 balA=ERC20(tokenA).balanceOf(address(this));
-			uint256 balB=ERC20(tokenB).balanceOf(address(this));
-
-			unchecked {
-				invariant=balA*balB;
-
-			}
-
-			_grantRole(LP_ROLE,msg.sender);
+		
+		invariant=ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
 
 		}
 
