@@ -103,7 +103,10 @@ contract AMM is AccessControl{
 			uint256 balA=ERC20(tokenA).balanceOf(address(this));
 			uint256 balB=ERC20(tokenB).balanceOf(address(this));
 
-			invariant=balA*balB;
+			unchecked {
+				invariant=balA*balB;
+
+			}
 
 			_grantRole(LP_ROLE,msg.sender);
 
