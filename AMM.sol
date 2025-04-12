@@ -54,33 +54,36 @@ contract AMM is AccessControl{
 		//require( invariant > 0, 'No liquidity' );
 
 
-		//YOUR CDE HERE 
-		bool isSellingA=(sellToken==tokenA);
-		address buyToken= isSellingA?tokenB : tokenA;
+		//YOUR CODE HERE 
+		address buyToken= (sellToken==tokenA)?tokenB : tokenA;
+		uint256 feeAdjustedAmount=(sellAmount*(10000-feebps))/10000;
 
-		require(ERC20(sellToken).transferFrom(msg.sender,address(this),sellAmount),"failed");
+		bool success=ERC20(sellToken).transferFrom(msg.sender,address(this),sellAmount);
+		require(success,'failed');
 		
 		uint256 qtyA=ERC20(tokenA).balanceOf(address(this));
 		uint256 qtyB=ERC20(tokenB).balanceOf(address(this));
 	
 
-		uint256 feeAdjustedAmount=(sellAmount*(10000-feebps))/10000;
 		uint256 swapAmt;
 
-		if(isSellingA){
-			uint256 newQuantityA=qtyA+feeAdjustedAmount;
-			uint256 newQuantityB=invariant/newQuantityA;
-			swapAmt=qtyB-newQuantityB;
+		if(sellToken==tokenA){
+			uint256 newQuantityA=qtyA;
+			uint256 newQuantityB=invariant/(qtyA-feeAdjustedAmount);
+			swapAmt=newQuantityB-qtyB;
 		}else{
-			uint256 newQuantityB=qtyB+feeAdjustedAmount;
-			uint256 newQuantityA=invariant/newQuantityB;
-			swapAmt=qtyA-newQuantityA;
+			uint256 newQuantityB=qtyB;
+			uint256 newQuantityA=invariant/(qtyB-feeAdjustedAmount);
+			swapAmt=newQuantityA-qtyA;
 		}
+
 		require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
 
 		uint256 new_invariant = ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
 		require( new_invariant >= invariant, 'Bad trade' );
 		invariant = new_invariant;
+
+		emit Swap(sellToken,buyToken,sellAmount,swapAmt);
 	}
 
 	/*
@@ -93,8 +96,9 @@ contract AMM is AccessControl{
 		require(ERC20(tokenA).transferFrom(msg.sender,address(this),amtA),"A failed");
 		require(ERC20(tokenB).transferFrom(msg.sender,address(this),amtB),"B failed");
 
-
-		invariant=ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
+		if (invariant==0){
+			invariant=amtA*amtB;
+		}
 
 		emit LiquidityProvision( msg.sender, amtA, amtB );
 	}
