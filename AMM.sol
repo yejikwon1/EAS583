@@ -58,32 +58,21 @@ contract AMM is AccessControl{
 
 		//YOUR CODE HERE 
 		address buyToken= (sellToken==tokenA)?tokenB : tokenA;
+		
+		uint reserveSell=ERC20(sellToken)balanceOf(address(this));
+		uint reserveBuyERC20(buyToken)balanceOf(address(this));
+
+		require(ERC20(sellToken).transferFrom(msg.sender,address(this),sellAmount),"failed");
+
+
 		uint256 feeAdjustedAmount=(sellAmount*(10000-feebps))/10000;
 
-		bool success=ERC20(sellToken).transferFrom(msg.sender,address(this),sellAmount);
-		require(success,'failed');
-		
-		uint256 qtyA=ERC20(tokenA).balanceOf(address(this));
-		uint256 qtyB=ERC20(tokenB).balanceOf(address(this));
-	
-
-		uint256 swapAmt;
-
-		if(sellToken==tokenA){
-			uint256 newQuantityA=qtyA;
-			uint256 newQuantityB=invariant/(qtyA-feeAdjustedAmount);
-			swapAmt=newQuantityB-qtyB;
-		}else{
-			uint256 newQuantityB=qtyB;
-			uint256 newQuantityA=invariant/(qtyB-feeAdjustedAmount);
-			swapAmt=newQuantityA-qtyA;
-		}
+		uint newReserveBuy=(reserveSell*reserveBuy)/(reserveSell+feeAdjustedAmount);
+		uint swapAmt=reserveBuy-newReserveBuy;
 
 		require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
 
-		uint256 new_invariant = ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
-		require( new_invariant >= invariant, 'Bad trade' );
-		invariant = new_invariant;
+		invariant=ERC(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
 
 		emit Swap(sellToken,buyToken,sellAmount,0);
 	}
@@ -106,18 +95,14 @@ contract AMM is AccessControl{
 		uint256 balA=ERC20(tokenA).balanceOf(address(this));
 		uint256 balB=ERC20(tokenB).balanceOf(address(this));
 
-		console.log("balanceOf tokenA: %s",balA);
-		console.log("balanceOf tokenB: %s",balB);
-
-		unchecked {
-			invariant=balA*balB;
-		}
+		invariant=balA*balB;
+		
 
 		console.log("invariant set: %s",invariant);
 
 
 
-		emit LiquidityProvision( msg.sender, amtA, amtB );
+		emit LiquidityProvision( msg.sender,baltA, balB );
 	}
 
 	/*
