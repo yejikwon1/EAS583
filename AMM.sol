@@ -59,8 +59,8 @@ contract AMM is AccessControl{
 		//YOUR CODE HERE 
 		address buyToken= (sellToken==tokenA)?tokenB : tokenA;
 		
-		uint reserveSell=ERC20(sellToken)balanceOf(address(this));
-		uint reserveBuy=ERC20(buyToken)balanceOf(address(this));
+		uint reserveSell=ERC20(sellToken).balanceOf(address(this));
+		uint reserveBuy=ERC20(buyToken).balanceOf(address(this));
 
 		require(ERC20(sellToken).transferFrom(msg.sender,address(this),sellAmount),"failed");
 
