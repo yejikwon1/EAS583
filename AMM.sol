@@ -72,7 +72,7 @@ contract AMM is AccessControl{
 
 		require(ERC20(buyToken).transfer(msg.sender,swapAmt),"failed");
 
-		invariant=ERC(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
+		invariant=ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
 
 		emit Swap(sellToken,buyToken,sellAmount,0);
 	}
@@ -102,7 +102,7 @@ contract AMM is AccessControl{
 
 
 
-		emit LiquidityProvision( msg.sender,baltA, balB );
+		emit LiquidityProvision( msg.sender,balA, balB );
 	}
 
 	/*
