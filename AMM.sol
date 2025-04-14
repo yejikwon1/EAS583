@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
+import "forge-std/console.sol";
 
 import "@openzeppelin/contracts/access/AccessControl.sol"; //This allows role-based access control through _grantRole() and the modifier onlyRole
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol"; //This contract needs to interact with ERC20 tokens
@@ -54,14 +55,13 @@ contract AMM is AccessControl{
 		require( invariant > 0, 'No liquidity' );
 	
 		//YOUR CODE HERE 
-
+		
 		address buyToken= (sellToken==tokenA)?tokenB : tokenA;
 		
 		uint reserveSell=ERC20(sellToken).balanceOf(address(this));
 		uint reserveBuy=ERC20(buyToken).balanceOf(address(this));
 
 		require(ERC20(sellToken).transferFrom(msg.sender,address(this),sellAmount),"failed");
-
 
 		uint256 feeAdjustedAmount=(sellAmount*(10000-feebps))/10000;
 
@@ -83,15 +83,15 @@ contract AMM is AccessControl{
 		//YOUR CODE HERE
 	
 		require(ERC20(tokenA).transferFrom(msg.sender,address(this),amtA),"A failed");
-	
 		require(ERC20(tokenB).transferFrom(msg.sender,address(this),amtB),"B failed");
 		
 		uint256 balA=ERC20(tokenA).balanceOf(address(this));
 		uint256 balB=ERC20(tokenB).balanceOf(address(this));
 
 		invariant=balA*balB;
-		
-		emit LiquidityProvision( msg.sender, amtA, amtB );
+		console.log("invariant set: %s",invariant);
+
+		emit LiquidityProvision( msg.sender,balA, balB );
 	}
 
 	/*
