@@ -60,9 +60,9 @@ contract AMM is AccessControl{
 		if(sellToken==tokenA){
 			buyToken=tokenB;
 		}else{
-			butyToken= tokenA;
+			buyToken= tokenA;
 		}
-		
+
 		uint reserveSell=ERC20(sellToken).balanceOf(address(this));
 		uint reserveBuy=ERC20(buyToken).balanceOf(address(this));
 
