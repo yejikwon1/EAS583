@@ -67,9 +67,6 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
                 'address':evt.address,
             })
 
-        if logs:
-            df=pd.DataFrame(logs)
-            df.to_csv(eventfile,index=False)
 
 
     else:
@@ -88,6 +85,6 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
                     'address':evt.address,
             })
 
-        if logs:
-            df=pd.DataFrame(logs)
-            df.to_csv(eventfile,index=False)
+    if logs:
+        df=pd.DataFrame(logs)
+        df.to_csv(eventfile,index=False)
