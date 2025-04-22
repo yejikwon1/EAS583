@@ -87,24 +87,19 @@ def scan_blocks(chain, contract_info="contract_info.json"):
         args=evt['args']
 
         if chain=='source':
-            token=args['token']
-            recipient=args['recipient']
-            amount=args['amount']
-            func=other_contract.functions.wrap(token,recipient, amount)
+            func=other_contract.functions.wrap(args['token'],args['recipient'],args['amount'])
+
         else:
-            token=args['underlying_token']
-            recipient=args['to']
-            amount=args['amount']
-            func=other_contract.functions.withdraw(token,recipient,amount)
+            func=other_contract.functions.withdraw(args['underlying_token'],args['to'],args['amount'])
 
-            tx=func.build_transaction({
-                'from':warden,
-                'nonce': other_w3.eth.get_transaction_count(warden),
-                'gas':500000,
-                'gasPrice': other_w3.to_wei('10','gwei'),
-                'chainId':other_w3.eth.chain_id
+        tx=func.build_transaction({
+            'from':warden,
+            'nonce': other_w3.eth.get_transaction_count(warden),
+            'gas':500000,
+            'gasPrice': other_w3.to_wei('10','gwei'),
+            'chainId':other_w3.eth.chain_id
 
-            })
-            signed=other_w3.eth.account.sign_transaction(tx,private_key=warden_privkey)
-            tx_hash=other_w3.eth.send_raw_transaction(signed.rawTransaction)
+        })
+        signed=other_w3.eth.account.sign_transaction(tx,private_key=warden_privkey)
+        tx_hash=other_w3.eth.send_raw_transaction(signed.rawTransaction)
 
