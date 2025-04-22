@@ -5,6 +5,7 @@ from datetime import datetime
 import json
 import pandas as pd
 
+#test
 
 def connect_to(chain):
     if chain == 'source':  # The source contract chain is avax
@@ -32,7 +33,6 @@ def get_contract_info(chain, contract_info):
         print( f"Failed to read contract info\nPlease contact your instructor\n{e}" )
         return 0
     return contracts[chain]
-
 
 
 def scan_blocks(chain, contract_info="contract_info.json"):
