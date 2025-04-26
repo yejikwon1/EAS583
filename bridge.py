@@ -78,9 +78,9 @@ def scan_blocks(chain, contract_info="contract_info.json"):
     to_block=latest
 
     if chain=='source':
-        event_filter=this_contract.events.Deposit().create_filter(fromBlock=from_block,toBlock=to_block)
+        event_filter=this_contract.events.Deposit().create_filter(from_block=from_block,to_block=to_block)
     else:
-        event_filter=this_contract.events.Unwrap().create_filter(fromBlock=from_block,toBlock=to_block)
+        event_filter=this_contract.events.Unwrap().create_filter(from_block=from_block,to_block=to_block)
 
     events=event_filter.get_all_entries()
     
