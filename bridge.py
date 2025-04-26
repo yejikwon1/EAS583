@@ -74,7 +74,7 @@ def scan_blocks(chain, contract_info="contract_info.json"):
 
 
     latest=w3.eth.block_number
-    from_block=max(0,latest-2)
+    from_block=max(0,latest-5)
     to_block=latest
 
     if chain=='source':
