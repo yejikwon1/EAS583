@@ -94,9 +94,9 @@ def scan_blocks(chain, contract_info="contract_info.json"):
 
         tx=func.build_transaction({
             'from':warden,
-            'nonce': other_w3.eth.get_transaction_count(warden),
-            'gas':500000,
-            'gasPrice': other_w3.to_wei('30','gwei'),
+            'nonce': other_w3.eth.get_transaction_count(warden,'pending'),
+            'gas':200000,
+            'gasPrice': other_w3.to_wei('20','gwei'),
             'chainId':other_w3.eth.chain_id
 
         })
