@@ -59,7 +59,7 @@ def scan_blocks(chain, contract_info="contract_info.json"):
 
     this_contract_info=info[chain]
     other_contract_info=info[other_chain]
-    warden=Web3.to_checksum_address(info['warden'])
+    warden=info['warden']
     warden_privkey=info['warden_privkey']
 
     this_contract=w3.eth.contract(
@@ -78,9 +78,9 @@ def scan_blocks(chain, contract_info="contract_info.json"):
     to_block=latest
 
     if chain=='source':
-        event_filter=this_contract.events.Deposit().create_filter(from_block=from_block,to_block=to_block)
+        event_filter=this_contract.events.Deposit().create_filter()
     else:
-        event_filter=this_contract.events.Unwrap().create_filter(from_block=from_block,to_block=to_block)
+        event_filter=this_contract.events.Unwrap().create_filter()
 
     events=event_filter.get_all_entries()
     
