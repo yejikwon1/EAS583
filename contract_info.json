@@ -1,4 +1,7 @@
-{"source": { "address": "0x160F3a3b4f291a90b39674f4F18465FFC029c5c7",
+{
+  "warden": "0xB1C653C391567b377AE9A5F7a6c9d3F7aa37f30e",
+  "warden_privkey":"0x6c7bfde4182f5e9677c6db1d62d4a0f3fdee943c49f933bc8c67d6749a2eae4b",
+  "source": { "address": "0x160F3a3b4f291a90b39674f4F18465FFC029c5c7",
  "abi": [
   {
     "type": "constructor",
