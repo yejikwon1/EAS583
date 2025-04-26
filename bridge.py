@@ -101,5 +101,5 @@ def scan_blocks(chain, contract_info="contract_info.json"):
 
         })
         signed=other_w3.eth.account.sign_transaction(tx,private_key=warden_privkey)
-        tx_hash=other_w3.eth.send_raw_transaction(signed.rawTransaction)
+        tx_hash=other_w3.eth.send_raw_transaction(signed.raw_transaction)
 
